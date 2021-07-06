@@ -21,5 +21,28 @@
                 display: block;
                 margin: 0;
         }
+
+        .callToActions{
+            position: absolute;
+            top: 50%; right: 40px;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+        }
+        ul,
+        li{
+            margin: 0;
+            padding: 0;
+        }
+
+        li{
+            list-style: none;
+        }
+        a{
+            font-size: 1.8rem;
+            line-height: 1;
+            color: blue;
+            text-decoration: none;
+        }
     }
 }
