@@ -36,13 +36,13 @@
         line-height: 1;
         font-weight: 400;
         text-transform: uppercase;
-        color: black;
-        background: rgba(255,255,255,.9);
+        color: white;
+        background: rgba(239,35,60,.9);
         padding: 10px 15px;
         border: 1px solid black;
 
         &:hover {
-          background: rgba(255,255,255,1);
+          background: rgba(33, 37, 41,1);
         }
 
       }
