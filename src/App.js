@@ -1,75 +1,120 @@
-import React, {Component} from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import MainLayout from './Layouts/MainLayout'
-import Homepage from './components/pages/Homepage';
-import Registration from './components/pages/Registration';
-import HomepageLayout from './Layouts/HomepageLayout';
-import Login from './components/pages/Login';
-import { auth, handleUsersProfile } from './Firebase/utils'
-import "./default.scss";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { checkUserSession } from './redux/User/user.actions';
 
-const initialState = {
-  currentUser: null
-};
+// components
+import AdminToolbar from './components/AdminToolbar';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...initialState
-    };
-  }
+// hoc
+import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 
-  authListener = null;
+// layouts
+import MainLayout from './layouts/MainLayout';
+import HomepageLayout from './layouts/HomepageLayout';
+import AdminLayout from './layouts/AdminLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 
-  componentDidMount() {
-    this.authListener = auth.onAuthStateChanged(async userAuth => {
-        if(userAuth) {
-          const userRef = await handleUsersProfile(userAuth);
-          userRef.onSnapshot(snapshot => {
-            this.setState({
-              currentUser: {
-                id: snapshot.id,
-                ...snapshot.data()
+// pages
+import Homepage from './pages/Homepage';
+import Search from './pages/Search';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
+import Recovery from './pages/Recovery';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Payment from './pages/Payment';
+import Order from './pages/Order';
+import './default.scss';
 
-              }
-            })
-          })
-        }
-        this.setState({
-          ...initialState
-        });
-      });
-    }
+const App = props => {
+  const dispatch = useDispatch();
 
-  componentWillUnmount() {
-    this.authListener();  
-  }
-  render(){
-    const {currentUser} = this.state;
-    return (
-      <div className="App">
+  useEffect(() => {
+    dispatch(checkUserSession());
+
+  }, []);
+
+  return (
+    <div className="App">
+      <AdminToolbar />
       <Switch>
-        <Route exact path="/" render={()=>(
-          <HomepageLayout currentUser={currentUser}>
+        <Route exact path="/" render={() => (
+          <HomepageLayout>
             <Homepage />
           </HomepageLayout>
+        )}
+        />
+        <Route exact path="/search" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
         )} />
-        <Route path="/registration" render={()=> (
-          <MainLayout currentUser={currentUser}>
+        <Route path="/search/:filterType" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+        )} />
+        <Route path="/product/:productID" render={() => (
+          <MainLayout>
+            <ProductDetails />
+          </MainLayout>
+        )} />
+        <Route path="/cart" render={() => (
+          <MainLayout>
+            <Cart />
+          </MainLayout>
+        )} />
+        <Route path="/payment" render={() => (
+          <WithAuth>
+            <MainLayout>
+              <Payment />
+            </MainLayout>
+          </WithAuth>
+        )} />
+        <Route path="/registration" render={() => (
+          <MainLayout>
             <Registration />
           </MainLayout>
         )} />
-              <Route path="/login" render={()=> currentUser ? <Redirect to="/" /> :(
-          <MainLayout currentUser={currentUser}>
-            <Login />
+        <Route path="/login"
+          render={() => (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )} />
+        <Route path="/recovery" render={() => (
+          <MainLayout>
+            <Recovery />
           </MainLayout>
         )} />
+        <Route path="/dashboard" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/order/:orderID" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Order />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/admin" render={() => (
+          <WithAdminAuth>
+            <AdminLayout>
+              <Admin />
+            </AdminLayout>
+          </WithAdminAuth>
+        )} />
       </Switch>
-      </div>
-    );
-  }
-  }
-
+    </div>
+  );
+}
 
 export default App;
