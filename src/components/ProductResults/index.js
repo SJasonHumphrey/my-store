@@ -77,7 +77,7 @@ const ProductResults = ({ }) => {
         Browse Products
       </h1>
 
-      <FormSelect {...configFilters} />
+      <FormSelect {...configFilters} style={{color: "white", backgroundColor: "rgb(239,35,60)"}}/>
 
       <div className="productResults">
         {data.map((product, pos) => {

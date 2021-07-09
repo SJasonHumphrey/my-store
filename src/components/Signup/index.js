@@ -110,17 +110,17 @@ const Signup = props => {
             handleChange={e => setConfirmPassword(e.target.value)}
           />
 
-          <Button type="submit">
+          <Button type="submit" style={{color:'white'}}>
             Register
           </Button>
         </form>
 
         <div className="links">
-          <Link to="/login">
+          <Link to="/login" style={{color:'white'}}>
             LogIn
           </Link>
           {` | `}
-          <Link to="/recovery">
+          <Link to="/recovery" style={{color:'white'}}>
             Reset Password
             </Link>
         </div>

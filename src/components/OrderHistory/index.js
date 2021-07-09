@@ -24,7 +24,8 @@ const columns = [
 const styles = {
   fontSize: '16px',
   cursor: 'pointer',
-  width: '10%'
+  width: '10%',
+  color: 'white'
 };
 
 const formatText = (columnName, columnValue) => {

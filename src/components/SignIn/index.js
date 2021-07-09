@@ -80,11 +80,11 @@ const SignIn = props => {
           </div>
 
           <div className="links">
-            <Link to="/registration">
+            <Link to="/registration" style={{color:'white'}}>
               Register
             </Link>
             {` | `}
-            <Link to="/recovery">
+            <Link to="/recovery" style={{color:'white'}}>
               Reset Password
             </Link>
           </div>

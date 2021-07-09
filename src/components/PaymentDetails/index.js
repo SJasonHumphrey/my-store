@@ -297,8 +297,8 @@ const PaymentDetails = () => {
             Card Details
           </h2>
 
-          <CardElement
-            options={configCardElement}
+          <CardElement className="card"
+            options={configCardElement} 
           />
         </div>
 

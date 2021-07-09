@@ -1,5 +1,5 @@
 ## My Store
-### E-Commerce with React, Redux, Sass and Firebase
+### E-Commerce with React, Redux, GraphQL Sass and Firebase
 
 
 
